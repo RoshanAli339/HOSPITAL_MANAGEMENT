@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 
+//a structure for storing the information of a patient
 typedef struct
 {	
 	char name[30], address[150], blood[3], disease[10],p_id[30];
@@ -11,6 +12,7 @@ typedef struct
 }
 patient;
 
+//a structure for storing the information of a doctor
 typedef struct
 {
 	char name[30], address[150], qualifications[20], speciality[30], d_id[30];
@@ -34,9 +36,11 @@ int main()
 	int choice;
 	printf("\t\t\t\t*****HOSPITAL******\n");
 	printf("1.Add new patient\n2.Get patient list\n3.Get count of patients\n4.Search for a patient\n5.Add new doctor\n6.Update patient information\n");
+	//prompting the user to enter their choice after printing the menu
 	printf("Enter your choice as per the serial number: ");
 	scanf("%d",&choice);
-
+	
+	//checking the choice and executing the respective function
 	switch (choice) 
 	{
 		case 1:
@@ -60,11 +64,12 @@ int main()
 		default:
 			printf("INVALID INPUT!\n");
 	}
-
+	
 	printf("\t\t\t\t******THANK YOU******\n");
 	return 0;
 }
 
+//for creating a id for both patients and doctors based on their name
 long pid(char *name)
 {
 	long id = 0;
@@ -75,6 +80,7 @@ long pid(char *name)
 	return id;
 }
 
+//for adding a new patient
 void add_patient()
 {
 	long patient_id;
@@ -82,18 +88,21 @@ void add_patient()
 	FILE *patient_list = fopen("PATIENT_LIST.txt", "a+");
 	if(patient_list == NULL)
 	{
+		//checking if the file could open or not and printing and error message if it doesn't
 		printf("Error in opening PATIENT_LIST file!\n");
 		return;
 	}
 	//asking for name of patient
 	printf("\nEnter name of patient: ");
 	scanf(" %[^\n]%*c",p.name);
+	//getting the patient id using the pid function
 	patient_id = pid(p.name);
 	
 	printf("Enter disease of patient: ");
 	scanf(" %[^\n]%*c", p.disease);
 	
 	sprintf(p.p_id, "P%ld", patient_id);
+
 	//writing name with patient id to the patients list	
 	fprintf(patient_list, "%s : %s , Disease: %s\n", p.p_id, p.name, p.disease);
 	
@@ -114,6 +123,7 @@ void add_patient()
 	printf("Enter weight of patient in kilograms: ");
 	scanf(" %f", &p.weight);
 	
+	//a string to store the name of the file to be created by using the patient id
 	char file[30];
 	strcpy(file, p.p_id);
 	strcat(file, ".txt");
@@ -140,9 +150,10 @@ void add_patient()
 	printf("Patient added successfully!\nPlease make a note of the patient id for future purposes: %s\n", p.p_id);
 }
 
-
+//for printing the list of patients
 void patient_list()
 {
+	//a file pointer to open the patients list file
 	FILE *fptr = fopen("PATIENT_LIST.txt", "a+");
 
 	if (fptr == NULL)
@@ -154,16 +165,20 @@ void patient_list()
 	char str;
 	
 	printf("\nThe list of patients currently admitted: \n\n");
+	//printing each character from the patients list file and printing them until EOF(End of File)
 	while ((str = fgetc(fptr)) != EOF)
 	{
 		printf("%c", str);
 	}
 }
 
-
+//for printing the number of patients
 void patient_count()
 {
+	//to count the number of patients
 	int count = 0;
+
+	//a file pointer for reading the patients list file
 	FILE *fptr = fopen("PATIENT_LIST.txt", "r");
 	
 	if(fptr == NULL)
@@ -173,7 +188,7 @@ void patient_count()
 	}
 
 	char str;
-
+	//reading through the file and increasing the number of patients when there is a new line character
 	while((str = fgetc(fptr)) != EOF)
 	{
 		if(str == '\n')
@@ -183,14 +198,21 @@ void patient_count()
 	printf("\nThe number of patients currently admitted in the hospital is: %d\n", count);
 }
 
+//to search for a patient using the patient's ID
 void patient_search()
 {
+	//a string to store the file name of patient 
 	char patient[30];
+
+	//asking for the patient id
 	printf("\fEnter the patient id: ");
 	scanf(" %[^\n]%*c", patient);
 	strcat(patient, ".txt");
-	FILE *fptr = fopen(patient, "r");
 
+	//a file pointer to open the patients file using his Patient ID
+	FILE *fptr = fopen(patient, "r");
+	
+	//the file opens successfully if it exists and prints an error if not
 	if(fptr == NULL)
 	{
 		printf("Patient details not found. Please check patient id and enter again!\n");
@@ -200,6 +222,8 @@ void patient_search()
 	printf("\nPatient details found!\n\n");
 	
 	char str;
+
+	//printing the details of patient from the file
 	while((str = fgetc(fptr)) != EOF)
 	{
 		printf("%c", str);
@@ -208,15 +232,17 @@ void patient_search()
 	fclose(fptr);
 }
 
-
+//for updating a patients function
 void patient_update()
 {
 	long patientid;
 	char spid[30];
+	//asking for the patient id
 	printf("Enter the patient id: ");
 	scanf(" %ld", &patientid);
 	sprintf(spid, "%ld.txt", patientid);
-
+	
+	//file pointers for opening the patients file and a temporary file to store the updated values
 	FILE *fptr = fopen(spid, "a+");
 	FILE *temp = fopen("temporary.txt", "a+");
 	if (fptr == NULL)
@@ -233,10 +259,13 @@ void patient_update()
 	}
 	
 	int ch, count  = 1;
+
+	//asking for what value the patient wants to change or update
 	printf("\n\t1.Name\n\t2.Disease\n\t3.Blood group\n\t4.Contact number\n\t5.Height\n\t6.Weight\n");
 	printf("Please enter the serial number of the value you wish to change: ");
 	scanf(" %d", &ch);
 	
+	//checking the choice of user and doing respective tasks
 	switch (ch)
 	{
 		case 1:
@@ -274,8 +303,11 @@ void patient_update()
 	
 	char str;
 	int flag = 0;
+
+	//writing to the temporary file 
 	while ((str = fgetc(fptr)) != EOF)
 	{
+		//checking if the current line is the one to be changed and also if it has been changed before or not
 		if (ch == count && flag == 0)
 		{
 			switch(ch)
@@ -303,6 +335,7 @@ void patient_update()
 			}
 			flag = 1;
 		}
+		//writing to the temporary file the other parameters
 		else if (ch != count)
 		{
 			fputc(str,temp);
@@ -316,6 +349,7 @@ void patient_update()
 	fclose(fptr);
 	fclose(temp);
 	
+	//file pointers to copy information from the temporary file to the original patients file
 	FILE *TEMP = fopen("temporary.txt","r");
 	if (TEMP == NULL)
 	{
@@ -339,15 +373,17 @@ void patient_update()
 	fclose(patient_file);
 	fclose(TEMP);
 		
+	//deleting the temporary file
 	if(remove("temporary.txt") == 0)
 		printf("\nDetails updated successfully!!\n");
 	else
 		printf("\nError in updating information!!\n");
 }
 
-
+//for adding a new doctor
 void add_doctor()
 {
+	//a file pointer to open the doctors list file
 	FILE *fptr = fopen("DOCTOR_LIST.txt", "a+");
 	long doctor_id;
 	if (fptr == NULL)
@@ -356,7 +392,8 @@ void add_doctor()
 		fclose(fptr);
 		return;
 	}
-
+	
+	//asking for the information of the doctor
 	printf("\nEnter name of doctor: ");
 	scanf(" %[^\n]%*c", d.name);
 	doctor_id = pid(d.name);
@@ -367,7 +404,8 @@ void add_doctor()
 
 	printf("Enter medical speciality of the doctor: ");
 	scanf(" %[^\n]%*c", d.speciality);
-
+	
+	//writing to the doctors file the doctors id, name, qualification and speciality
 	fprintf(fptr, "%s : Dr.%s %s , Specialist in: %s\n", d.d_id, d.name, d.qualifications, d.speciality);
 	fclose(fptr);
 
@@ -376,11 +414,13 @@ void add_doctor()
 
 	printf("Enter contact number of doctor: ");
 	scanf(" %ld", &d.contact);
-
+	
+	//a string to the store the file name of doctor using the doctors ID
 	char file[30];
 	strcpy(file, d.d_id);
 	strcat(file, ".txt");
-
+	
+	// a file pointer for creating a file for the doctor
 	FILE *doctor_file = fopen(file, "a+");
 	if(doctor_file == NULL)
 	{
@@ -389,6 +429,7 @@ void add_doctor()
 		return;
 	}
 
+	//writing information of doctor to the doctors file
 	fprintf(doctor_file, "Name: %s\n", d.name);
 	fprintf(doctor_file, "Doctor ID: %s\n", d.d_id);
 	fprintf(doctor_file, "Qualifications: %s\n", d.qualifications);
