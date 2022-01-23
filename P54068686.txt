@@ -1,0 +1,8 @@
+Name: Harish 
+Patient ID: P54068686
+Disease: 
+Blood group: AB-
+Contact number: 65653255412
+Address: Guntur
+Height: 5.70FT
+Weight: 66.00KG

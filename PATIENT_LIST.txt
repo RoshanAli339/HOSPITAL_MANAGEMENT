@@ -1,2 +1,3 @@
 P65475950800255971 : Roshan Ali Shaik , Disease: Fever
 P6399468 : Rakesh , Disease: Cold
+P54068686 : Harish  , Disease: Stomach acP54068686
