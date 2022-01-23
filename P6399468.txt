@@ -1,0 +1,8 @@
+Name: Rakesh
+Patient ID: P6399468
+Disease: Cold
+Blood group: A+
+Contact number: 9632584196
+Address: Iscon temple Guntur
+Height: 5.50FT
+Weight: 66.00KG
