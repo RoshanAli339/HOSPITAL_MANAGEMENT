@@ -32,7 +32,8 @@ void patient_update();
 void add_doctor();
 
 int main()
-{
+{	
+
 	int choice;
 	printf("\t\t\t\t*****HOSPITAL******\n");
 	printf("1.Add new patient\n2.Get patient list\n3.Get count of patients\n4.Search for a patient\n5.Add new doctor\n6.Update patient information\n");
