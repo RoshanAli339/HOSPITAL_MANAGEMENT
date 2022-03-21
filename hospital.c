@@ -35,36 +35,43 @@ int main()
 {	
 
 	int choice;
-	printf("\t\t\t\t*****HOSPITAL******\n");
-	printf("1.Add new patient\n2.Get patient list\n3.Get count of patients\n4.Search for a patient\n5.Add new doctor\n6.Update patient information\n");
-	//prompting the user to enter their choice after printing the menu
-	printf("Enter your choice as per the serial number: ");
-	scanf("%d",&choice);
+
+    while(1)
+    {
+	    printf("\t\t\t\t*****HOSPITAL******\n");
+	    printf("1.Add new patient\n2.Get patient list\n3.Get count of patients\n4.Search for a patient\n5.Add new doctor\n6.Update patient information\n7.Exit\n");
+	    //prompting the user to enter their choice after printing the menu
+	    printf("Enter your choice as per the serial number: ");
+	    scanf("%d",&choice);
 	
-	//checking the choice and executing the respective function
-	switch (choice) 
-	{
-		case 1:
-			add_patient();
-			break;
-		case 2:
-			patient_list();
-			break;
-		case 3:
-			patient_count();
-			break;
-		case 4:
-			patient_search();
-			break;
-		case 5:
-			add_doctor();
-			break;
-		case 6:
-			patient_update();
-			break;
-		default:
-			printf("INVALID INPUT!\n");
-	}
+	    //checking the choice and executing the respective function
+	    switch (choice) 
+	    {
+		    case 1:
+			    add_patient();
+			    break;
+		    case 2:
+			    patient_list();
+			    break;
+		    case 3:
+			    patient_count();
+			    break;
+		    case 4:
+			    patient_search();
+			    break;
+		    case 5:
+			    add_doctor();
+			    break;
+		    case 6:
+			    patient_update();
+			    break;
+            case 7:
+                printf("\t\t\t\t\t\t***********THANK YOU*************\n");
+                return 0;
+		    default:
+			    printf("INVALID INPUT!\n");
+	    }
+    }
 	
 	printf("\t\t\t\t******THANK YOU******\n");
 	return 0;

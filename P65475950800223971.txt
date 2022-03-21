@@ -1,0 +1,8 @@
+Name: Roshan Ali SHaik
+Patient ID: P65475950800223971
+Disease: Fevere
+Blood group: O+
+Contact number: 9988884
+Address: Gujjanagundla Guntur
+Height: 65.00FT
+Weight: 55.00KG
